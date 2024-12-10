@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8413600459917160693}
   - component: {fileID: 197475959069857850}
   - component: {fileID: 1268268012670223823}
+  - component: {fileID: 292142396173585562}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -179,7 +180,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 15
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
@@ -252,7 +253,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 13
-  jumpForce: 14
+  jumpForce: 20
+  knockbackForce: 5
+  hitbox: {fileID: 1165053541389709289}
+  audioSource: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: eb070040b0dad1a4a97f8faf16bf4cdf, type: 3}
+  attackSound: {fileID: 8300000, guid: 396ff4fdb7e89074b906967dd1c3e3a7, type: 3}
+  damageSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!95 &197475959069857850
 Animator:
   serializedVersion: 5
@@ -289,3 +297,17 @@ MonoBehaviour:
   curHealth: 100
   maxHealth: 100
   healthBar: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+--- !u!114 &292142396173585562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7735605516712327277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abae57dbeb1580041a35dbb7fb99274b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10

@@ -1,20 +1,29 @@
-﻿using UnityEngine;
+﻿// Player2Controller Script
+using UnityEngine;
 
 public class Player2Controller : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
+    public float knockbackForce = 10f;
 
     [Header("References")]
     public Animator animator;
     private Rigidbody2D rb;
-
     private bool isGrounded;
 
-    private const string PLAYER_HITBOX_TAG = "PlayerHitbox"; // Tag de la hitbox del Player
-    private float lastHurtTime = -Mathf.Infinity; // Último tiempo en que Player2 fue golpeado
-    public float hurtCooldown = 0.5f; // Tiempo mínimo entre golpes consecutivos
+    [Header("Hitbox Settings")]
+    public GameObject hitbox;
+
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip damageSound;
+    public AudioClip deathSound;
+
+    private bool isDead = false; // Para comprobar si el jugador está muerto
 
     void Start()
     {
@@ -23,10 +32,32 @@ public class Player2Controller : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
+
+        if (hitbox != null)
+        {
+            hitbox.SetActive(false);
+        }
+
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource no asignado en Player2Controller.");
+        }
+
+        if (damageSound == null)
+        {
+            Debug.LogWarning("Clip de sonido de daño no asignado.");
+        }
+
+        if (deathSound == null)
+        {
+            Debug.LogWarning("Clip de sonido de muerte no asignado.");
+        }
     }
 
     void Update()
     {
+        if (isDead) return; // Si está muerto, no puede hacer nada
+
         HandleMovement();
         HandleJump();
         HandleAttack();
@@ -36,48 +67,89 @@ public class Player2Controller : MonoBehaviour
     {
         float moveX = 0;
 
-        // Movimiento con J y L
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.L)) // Mover a la derecha
         {
-            moveX = 1; // Movimiento a la derecha
-            transform.localScale = new Vector3(1, 1, 1); // Asegurar orientación hacia la derecha
+            moveX = 1;
+            if (transform.localScale.x < 0) // Si el sprite está mirando a la izquierda, corrige la escala
+            {
+                transform.localScale = new Vector3(1, Mathf.Abs(transform.localScale.y), Mathf.Abs(transform.localScale.z));
+            }
         }
-        else if (Input.GetKey(KeyCode.J))
+        else if (Input.GetKey(KeyCode.J)) // Mover a la izquierda
         {
-            moveX = -1; // Movimiento a la izquierda
-            transform.localScale = new Vector3(-1, 1, 1); // Voltear sprite hacia la izquierda
+            moveX = -1;
+            if (transform.localScale.x > 0) // Si el sprite está mirando a la derecha, corrige la escala
+            {
+                transform.localScale = new Vector3(-1, Mathf.Abs(transform.localScale.y), Mathf.Abs(transform.localScale.z));
+            }
         }
 
-        // Aplicar movimiento
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
-
-        // Actualizar animación
-        animator.SetFloat("Speed", Mathf.Abs(moveX)); // Usamos Mathf.Abs para que la velocidad siempre sea positiva
+        animator.SetFloat("Speed", Mathf.Abs(moveX));
     }
+
+
 
     private void HandleJump()
     {
-        // Salto con I
         if (Input.GetKeyDown(KeyCode.I) && isGrounded)
         {
             rb.velocity = Vector2.up * jumpForce;
             animator.SetBool("Jump", true);
-            isGrounded = false; // El jugador ya no está en el suelo
+            isGrounded = false;
+            if (audioSource != null && jumpSound != null)
+            {
+                audioSource.PlayOneShot(jumpSound);
+            }
         }
     }
 
     private void HandleAttack()
     {
-        // Ataque con K
         if (Input.GetKeyDown(KeyCode.K))
         {
             animator.SetTrigger("Attack");
+            if (audioSource != null && attackSound != null)
+            {
+                audioSource.PlayOneShot(attackSound);
+            }
+        }
+    }
+
+    public void ActivateHitbox()
+    {
+        if (hitbox != null)
+        {
+            hitbox.SetActive(true);
+            Debug.Log("Hitbox de Player2 activada.");
+        }
+    }
+
+    public void DeactivateHitbox()
+    {
+        if (hitbox != null)
+        {
+            hitbox.SetActive(false);
+            Debug.Log("Hitbox de Player2 desactivada.");
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Detectar si el jugador toca el suelo
+        if (hitbox.activeSelf && collision.gameObject.CompareTag("Player"))
+        {
+            Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
+            Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (otherRb != null)
+            {
+                otherRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                if (audioSource != null && damageSound != null)
+                {
+                    audioSource.PlayOneShot(damageSound);
+                }
+            }
+        }
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -85,21 +157,18 @@ public class Player2Controller : MonoBehaviour
         }
     }
 
-    // Detectar colisión con la hitbox de Player usando OnTriggerStay2D
-    private void OnTriggerStay2D(Collider2D other)
+    public void Die()
     {
-        if (other.gameObject.CompareTag(PLAYER_HITBOX_TAG))
-        {
-            // Verifica si puede recibir daño nuevamente
-            if (Time.time >= lastHurtTime + hurtCooldown)
-            {
-                lastHurtTime = Time.time; // Actualiza el tiempo del último golpe
+        if (isDead) return;
 
-                // Activar la animación de daño
-                animator.ResetTrigger("IsHurt"); // Reinicia el trigger por si está activo
-                animator.SetTrigger("IsHurt");
-                Debug.Log("Player2 está siendo golpeado por Player.");
-            }
+        isDead = true;
+        animator.SetTrigger("Die");
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.PlayOneShot(deathSound);
         }
+
+        // Pausar la música usando el MusicManager
+        MusicManager.Instance?.PauseBackgroundMusic();
     }
 }

@@ -1,5 +1,17 @@
 fileFormatVersion: 2
-guid: 0f454b48cb6a8154087d009d99b25576
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/Prefabs/healthbar.jpg.meta
+guid: cb756e77542f0c14a8fe76f263301ea0
+========
+guid: fab8e63713602b04aa84b61e3cbfbf35
+>>>>>>>> 07a47c2 (UI Menus):Assets/Prefabs/Health-Bar.png.meta
+=======
+<<<<<<<< HEAD:Assets/Prefabs/Health-Bar.png.meta
+guid: 78ffbe3961fc45942a149eb11a1e1431
+========
+guid: 81dee737220ebc64f97415bb8d370866
+>>>>>>>> 07a47c2 (UI Menus):Assets/Prefabs/healthbar.jpg.meta
+>>>>>>> 07a47c2 (UI Menus)
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|c:\\users\\usuario\\downloads\\themillionfighter-main\\themillionfighter-main\\assets\\scripts\\player2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\assets\\scripts\\player2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|c:\\users\\usuario\\downloads\\themillionfighter-main\\themillionfighter-main\\assets\\scripts\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\musicmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|c:\\users\\usuario\\downloads\\themillionfighter-main\\themillionfighter-main\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24E09C1A-6ACA-EA54-8DC3-5B839FCC53E7}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -18,19 +22,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MusicManager.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\Assets\\Scripts\\MusicManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MusicManager.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\Assets\\Scripts\\MusicManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MusicManager.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAA9wFQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-10T23:14:01.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowDQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAwwJ0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T00:36:32.924Z"
+              "WhenOpened": "2024-12-06T00:36:32.924Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -40,7 +58,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player2.cs",
               "ToolTip": "C:\\Users\\Usuario\\Downloads\\TheMillionFighter-main\\TheMillionFighter-main\\Assets\\Scripts\\Player2.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player2.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAuwEcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAUwEgAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-06T00:07:19.389Z",
               "EditorCaption": ""
