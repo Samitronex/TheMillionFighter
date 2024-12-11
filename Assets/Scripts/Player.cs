@@ -1,4 +1,3 @@
-// Player Script
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -17,7 +16,9 @@ public class Player : MonoBehaviour
     [Header("Audio Settings")]
     public AudioSource audioSource;
     public AudioClip jumpSound;
-    public AudioClip attackSound;
+    public AudioClip attackSound1; // Sonido del primer ataque
+    public AudioClip attackSound2; // Sonido del segundo ataque
+    public AudioClip attackSound3; // Sonido del tercer ataque
     public AudioClip damageSound;
     public AudioClip deathSound;
 
@@ -90,12 +91,28 @@ public class Player : MonoBehaviour
 
     private void HandleAttack()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)) // Primer ataque
         {
             animator.SetTrigger("Attack");
-            if (audioSource != null && attackSound != null)
+            if (audioSource != null && attackSound1 != null)
             {
-                audioSource.PlayOneShot(attackSound);
+                audioSource.PlayOneShot(attackSound1);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.R)) // Segundo ataque
+        {
+            animator.SetTrigger("Attack2");
+            if (audioSource != null && attackSound2 != null)
+            {
+                audioSource.PlayOneShot(attackSound2);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.T)) // Tercer ataque
+        {
+            animator.SetTrigger("Attack3");
+            if (audioSource != null && attackSound3 != null)
+            {
+                audioSource.PlayOneShot(attackSound3);
             }
         }
     }

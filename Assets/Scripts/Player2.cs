@@ -1,16 +1,13 @@
-﻿// Player2Controller Script
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player2Controller : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    private Animator animator;
+    private Rigidbody2D rb;
+
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float knockbackForce = 10f;
-
-    [Header("References")]
-    public Animator animator;
-    private Rigidbody2D rb;
     private bool isGrounded;
 
     [Header("Hitbox Settings")]
@@ -19,7 +16,9 @@ public class Player2Controller : MonoBehaviour
     [Header("Audio Settings")]
     public AudioSource audioSource;
     public AudioClip jumpSound;
-    public AudioClip attackSound;
+    public AudioClip attackSound1; // Sonido del primer ataque
+    public AudioClip attackSound2; // Sonido del segundo ataque
+    public AudioClip attackSound3; // Sonido del tercer ataque
     public AudioClip damageSound;
     public AudioClip deathSound;
 
@@ -27,11 +26,8 @@ public class Player2Controller : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
 
         if (hitbox != null)
         {
@@ -65,30 +61,22 @@ public class Player2Controller : MonoBehaviour
 
     private void HandleMovement()
     {
-        float moveX = 0;
+        float moveInput = 0;
 
         if (Input.GetKey(KeyCode.L)) // Mover a la derecha
         {
-            moveX = 1;
-            if (transform.localScale.x < 0) // Si el sprite está mirando a la izquierda, corrige la escala
-            {
-                transform.localScale = new Vector3(1, Mathf.Abs(transform.localScale.y), Mathf.Abs(transform.localScale.z));
-            }
+            moveInput = 1;
+            transform.localScale = new Vector3(1, 1, 1); // Mirar a la derecha
         }
         else if (Input.GetKey(KeyCode.J)) // Mover a la izquierda
         {
-            moveX = -1;
-            if (transform.localScale.x > 0) // Si el sprite está mirando a la derecha, corrige la escala
-            {
-                transform.localScale = new Vector3(-1, Mathf.Abs(transform.localScale.y), Mathf.Abs(transform.localScale.z));
-            }
+            moveInput = -1;
+            transform.localScale = new Vector3(-1, 1, 1); // Mirar a la izquierda
         }
 
-        rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
-        animator.SetFloat("Speed", Mathf.Abs(moveX));
+        transform.Translate(Vector2.right * moveInput * moveSpeed * Time.deltaTime);
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
     }
-
-
 
     private void HandleJump()
     {
@@ -106,12 +94,28 @@ public class Player2Controller : MonoBehaviour
 
     private void HandleAttack()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K)) // Primer ataque
         {
             animator.SetTrigger("Attack");
-            if (audioSource != null && attackSound != null)
+            if (audioSource != null && attackSound1 != null)
             {
-                audioSource.PlayOneShot(attackSound);
+                audioSource.PlayOneShot(attackSound1);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.O)) // Segundo ataque
+        {
+            animator.SetTrigger("Attack2");
+            if (audioSource != null && attackSound2 != null)
+            {
+                audioSource.PlayOneShot(attackSound2);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.P)) // Tercer ataque
+        {
+            animator.SetTrigger("Attack3");
+            if (audioSource != null && attackSound3 != null)
+            {
+                audioSource.PlayOneShot(attackSound3);
             }
         }
     }
@@ -136,7 +140,7 @@ public class Player2Controller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (hitbox.activeSelf && collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && hitbox.activeSelf) // Detecta colisión con Player
         {
             Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
             Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -167,8 +171,5 @@ public class Player2Controller : MonoBehaviour
         {
             audioSource.PlayOneShot(deathSound);
         }
-
-        // Pausar la música usando el MusicManager
-        MusicManager.Instance?.PauseBackgroundMusic();
     }
 }
